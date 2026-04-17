@@ -2,6 +2,6 @@ body{
     background-color: rgb(90, 29, 7);
 }
 
-h1{
+h1, h3, p{
     color: rgb(214, 196, 184);
 }

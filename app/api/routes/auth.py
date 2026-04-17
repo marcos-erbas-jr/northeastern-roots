@@ -14,9 +14,21 @@ def pagina_login(request: Request):
     )
 
 @router.post("/login")
-def login(email: str = Form(...), senha: str = Form(...)):
+def login(request: Request, email: str = Form(...), senha: str = Form(...)):
 
     if email == "admin@raizesdonordeste.com" and senha == "12345678":
-        return RedirectResponse(url="/", status_code=302)
+        response = RedirectResponse(url="/painel", status_code=302)
+        response.set_cookie(key="logado", value="true")
+        return response
 
-    return {"erro": "Login inválido"}
+    return templates.TemplateResponse(
+        name="login.html",
+        request=request,
+        context={"erro": "Email ou senha inválidos"}
+    )
+
+@router.get("/logout")
+def logout():
+    response = RedirectResponse(url="/", status_code=302)
+    response.delete_cookie("logado")
+    return response
