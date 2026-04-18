@@ -1,76 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-      <head>
-        <meta charset="UTF-8">
-        <title>Painel</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="/static/css/estilo.css">
-        
-        
-      </head>
-    <body>
-      <div class="d-flex flex-column align-items-center">
-        <div style="width: 800px;">
-          <div class="d-flex justify-content-between align-items-center mb-3">
+{% extends "base.html" %}
 
-            <h1 class="m-0">Raízes do Nordeste</h1>
+{% block title %}Painel{% endblock %}
 
-            <a href="/logout" class="btn btn-warning">Sair</a>
-
-          </div>
-          
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#inicio">Início</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuários</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Registrar</a></li>
-                        <li><a class="dropdown-item" href="#">Editar</a></li>
-                        <li><a class="dropdown-item" href="#">Excluir</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Unidades</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Cardápio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Estoque</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#pedidos">Pedidos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Clientes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Promoção</a>
-                </li>
-            </ul>
-
-            <div class="tab-content mt-4">
-
-        <div class="tab-content mt-4">
-
-            <div class="tab-pane fade show active" id="inicio">
-                <h3>Bem-vindo ao sistema</h3>
-            </div>
-
-            <div class="tab-pane fade" id="pedidos">
-                <h3>Área de pedidos</h3>
-            </div>
-
-        </div>
-
-        </div>
-         
-        
-        
-      </div>
-
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-</html>
+{% block content %}
+<h3>Bem-vindo ao sistema</h3>
+<p>Escolha uma opção no menu acima.</p>
+{% endblock %}

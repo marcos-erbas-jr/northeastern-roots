@@ -5,15 +5,15 @@ from app.core.security import verificar_login
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
-@router.get("/painel")
-def painel(request: Request):
+@router.get("/usuarios")
+def pagina_usuarios(request: Request):
 
     response = verificar_login(request)
     if response:
         return response
 
     return templates.TemplateResponse(
-        name="painel.html",
+        name="usuarios.html",
         request=request,
         context={
             "role": request.cookies.get("role")

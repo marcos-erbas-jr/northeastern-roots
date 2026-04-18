@@ -5,6 +5,17 @@ from fastapi.responses import RedirectResponse
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
+usuarios = {
+    "admin@raizesdonordeste.com": {"senha": "12345678", "role": "admin"},
+    "atendente@raizesdonordeste.com": {"senha": "12345678", "role": "atendente"},
+    "cozinha@raizesdonordeste.com": {"senha": "12345678", "role": "cozinha"},
+}
+
+def autenticar_usuario(email, senha):
+    usuario = usuarios.get(email)
+    if usuario and usuario["senha"] == senha:
+        return usuario
+    return None
 
 @router.get("/login")
 def pagina_login(request: Request):
@@ -16,9 +27,12 @@ def pagina_login(request: Request):
 @router.post("/login")
 def login(request: Request, email: str = Form(...), senha: str = Form(...)):
 
-    if email == "admin@raizesdonordeste.com" and senha == "12345678":
+    usuario = autenticar_usuario(email, senha)
+
+    if usuario:
         response = RedirectResponse(url="/painel", status_code=302)
-        response.set_cookie(key="logado", value="true")
+        response.set_cookie("logado", "true")
+        response.set_cookie("role", usuario["role"])
         return response
 
     return templates.TemplateResponse(
@@ -29,6 +43,7 @@ def login(request: Request, email: str = Form(...), senha: str = Form(...)):
 
 @router.get("/logout")
 def logout():
-    response = RedirectResponse(url="/", status_code=302)
+    response = RedirectResponse(url="/login", status_code=302)
     response.delete_cookie("logado")
+    response.delete_cookie("role")
     return response
