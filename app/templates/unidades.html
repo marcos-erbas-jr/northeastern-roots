@@ -5,4 +5,32 @@
 {% block content %}
 <h3>Unidades</h3>
 <p>Gestão de unidades.</p>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Registro</th>
+      <th scope="col">Unidade</th>
+      <th scope="col">Vendas</th>
+      <th scope="col">Faturamento</th>
+      <th scope="col">Funcionários</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Unid. Campos</td>
+      <td>1000</td>
+      <td>R$50000,00</td>
+      <td>7</td>
+      <td>
+        <button class="btn btn-primary">Detalhes</button>
+        <button class="btn btn-danger">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="d-flex gap-2 mt-3">
+    <button class="btn btn-success">Registrar</button>
+</div>
 {% endblock %}

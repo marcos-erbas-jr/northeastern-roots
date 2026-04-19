@@ -5,4 +5,47 @@
 {% block content %}
 <h3>Clientes</h3>
 <p>Gestão de clientes.</p>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+    Unidades
+  </button>
+  <div class="dropdown-menu dropdown-menu-lg-right">
+    <button class="dropdown-item" type="button">Unid. Campos</button>
+    <button class="dropdown-item" type="button">Another action</button>
+    <button class="dropdown-item" type="button">Something else here</button>
+  </div>
+</div>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Registro</th>
+      <th scope="col">Nome</th>
+      <th scope="col">E-mail</th>
+      <th scope="col">Telefone</th>
+      <th scope="col">Prog. Fidelização</th>
+      <th scope="col">Nº de pedidos</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Fulano da Silva</td>
+      <td>fulanosilva@email.com</td>
+      <td>22912345678</td>
+      <td>Sim</td>
+      <td>15</td>
+      <td>
+        <button class="btn btn-primary">Atualizar</button>
+        <button class="btn btn-danger">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="d-flex gap-2 mt-3">
+    <button class="btn btn-success">Criar</button>
+</div>
+
 {% endblock %}

@@ -15,6 +15,7 @@
 
             <h1 class="m-0">Raízes do Nordeste</h1>
             <a href="/" class="btn btn-warning">Voltar</a>
+            
 
           </div>
         </div>
@@ -31,7 +32,9 @@
               <div class="card-body">
                 <h5 class="card-title">Comida1</h5>
                 <p class="card-text">Calabresa, queijo, cebola</p>
-                <a href="#" class="btn btn-primary">Adicionar</a>
+                <button onclick="adicionarItem('Comida1', 25)" class="btn btn-primary">
+                  Adicionar
+                </button>
               </div>
             </div>
           </div>
@@ -42,7 +45,9 @@
               <div class="card-body">
                 <h5 class="card-title">Comida2</h5>
                 <p class="card-text">Frango, catupiry</p>
-                <a href="#" class="btn btn-primary">Adicionar</a>
+                <button onclick="adicionarItem('Comida2', 30)" class="btn btn-primary">
+                  Adicionar
+                </button>
               </div>
             </div>
           </div>
@@ -53,7 +58,9 @@
               <div class="card-body">
                 <h5 class="card-title">Comida3</h5>
                 <p class="card-text">Bacon, queijo</p>
-                <a href="#" class="btn btn-primary">Adicionar</a>
+                <button onclick="adicionarItem('Comida3', 40)" class="btn btn-primary">
+                  Adicionar
+                </button>
               </div>
             </div>
           </div>
@@ -61,6 +68,18 @@
         </div>
       </div>
 
+       <div class="d-flex justify-content-center mt-4">
+          <div class="d-flex justify-content-between mb-3" style="color:rgb(214, 196, 184); margin-right: 3%;">
+                <span id="quantidade">Quantidade: 0- </span>
+                <span id="total">Total: R$ 0,00</span>
+            </div>
 
+          <button class="btn btn-success" onclick="finalizarPedido()">
+            Finalizar pedido
+          </button>
+        </div>
+
+
+      <script src="/static/js/carrinho.js"></script>
     </body>
 </html>
