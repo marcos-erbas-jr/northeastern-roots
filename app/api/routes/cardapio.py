@@ -6,7 +6,7 @@ router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
 @router.get("/cardapio")
-def pagina_pedidos(request: Request):
+def pagina_cardapios(request: Request):
 
     response = verificar_login(request)
     if response:

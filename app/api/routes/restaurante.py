@@ -6,7 +6,7 @@ templates = Jinja2Templates(directory="app/templates")
 
 
 @router.get("/restaurante")
-def pagina_login(request: Request):
+def pagina_restaurante(request: Request):
     return templates.TemplateResponse(
         name="restaurante.html",
         request=request

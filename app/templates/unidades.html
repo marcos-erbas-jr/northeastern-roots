@@ -17,20 +17,23 @@
     </tr>
   </thead>
   <tbody>
+    {% for u in unidades %}
     <tr>
-      <th scope="row">1</th>
-      <td>Unid. Campos</td>
-      <td>1000</td>
-      <td>R$50000,00</td>
-      <td>7</td>
+      <th scope="row">{{u.id}}</th>
+      <td>{{u.nome}}</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+
       <td>
         <button class="btn btn-primary">Detalhes</button>
         <button class="btn btn-danger">Excluir</button>
       </td>
     </tr>
-  </tbody>
+    {%endfor%}
+</tbody>
 </table>
 <div class="d-flex gap-2 mt-3">
-    <button class="btn btn-success">Registrar</button>
+    <a href="/unidades/registrar" class="btn btn-success">Registrar</a>
 </div>
 {% endblock %}

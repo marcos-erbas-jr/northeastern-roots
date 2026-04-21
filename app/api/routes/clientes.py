@@ -6,7 +6,7 @@ router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
 @router.get("/clientes")
-def pagina_pedidos(request: Request):
+def pagina_clientes(request: Request):
 
     response = verificar_login(request)
     if response:

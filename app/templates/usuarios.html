@@ -10,10 +10,15 @@
   <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
     Unidades
   </button>
-  <div class="dropdown-menu dropdown-menu-lg-right">
-    <button class="dropdown-item" type="button">Unid. Campos</button>
-    <button class="dropdown-item" type="button">Another action</button>
-    <button class="dropdown-item" type="button">Something else here</button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="/usuarios">Todas</a>
+
+    {% for un in unidades %}
+      <a class="dropdown-item" href="/usuarios?unidade_id={{un.id}}">
+        {{un.nome}}
+      </a>
+    {% endfor %}
+
   </div>
 </div>
 
@@ -27,18 +32,22 @@
       <th scope="col">Ações</th>
     </tr>
   </thead>
+  
   <tbody>
+    {% for u in usuarios %}
     <tr>
-      <th scope="row">10000</th>
-      <td>Maria</td>
-      <td>Atendente</td>
-      <td>Unid.Campos</td>
+      <th scope="row">{{u.id}}</th>
+      <td>{{u.nome}}</td>
+      <td>{{u.role}}</td>
+      <td>{{u.unidade}}</td>
+
       <td>
-        <button class="btn btn-primary">Atualizar</button>
+        <button class="btn btn-primary">Detalhes</button>
         <button class="btn btn-danger">Excluir</button>
       </td>
     </tr>
-  </tbody>
+    {%endfor%}
+</tbody>
 </table>
 <div class="d-flex gap-2 mt-3">
     <button class="btn btn-success">Criar</button>
