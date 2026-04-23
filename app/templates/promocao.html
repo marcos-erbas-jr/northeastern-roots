@@ -10,10 +10,13 @@
   <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
     Unidades
   </button>
-  <div class="dropdown-menu dropdown-menu-lg-right">
-    <button class="dropdown-item" type="button">Unid. Campos</button>
-    <button class="dropdown-item" type="button">Another action</button>
-    <button class="dropdown-item" type="button">Something else here</button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="/promocao">Todas</a>
+    {% for un in unidades %}
+      <a class="dropdown-item" href="/promocao?unidade_id={{un.id}}">
+        {{un.nome}}
+      </a>
+    {% endfor %}
   </div>
 </div>
 
@@ -29,18 +32,21 @@
     </tr>
   </thead>
   <tbody>
+    {% for p in promocoes %}
     <tr>
-      <th scope="row">1</th>
-      <td>Pizza</td>
-      <td>R$25,00</td>
-      <td>10%</td>
-      <td>R$22,50</td>
+      <th scope="row">{{p.id}}</th>
+      <td>{{p.prato}}</td>
+      <td>{{p.preco_fixo}}</td>
+      <td>{{p.desconto}}</td>
+      <td>{{p.preco_promo}}</td>
+
       <td>
-        <button class="btn btn-primary">Atualizar</button>
+        <button class="btn btn-primary">Detalhes</button>
         <button class="btn btn-danger">Excluir</button>
       </td>
     </tr>
-  </tbody>
+    {%endfor%}
+</tbody>
 </table>
 <div class="d-flex gap-2 mt-3">
     <button class="btn btn-success">Criar</button>

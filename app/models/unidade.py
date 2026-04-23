@@ -10,3 +10,4 @@ class Unidade(Base):
     ativo = Column(Boolean, default=True)
     usuarios = relationship("Usuario", back_populates="unidade")
     pratos = relationship("Prato", back_populates="unidade")
+    promocoes = relationship("Promocao", back_populates="unidade")

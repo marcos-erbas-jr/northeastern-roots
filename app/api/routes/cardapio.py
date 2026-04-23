@@ -4,6 +4,7 @@ from app.core.security import verificar_login
 from app.core.database import SessionLocal
 from app.models.prato import Prato
 from app.models.unidade import Unidade
+from app.models.promocao import Promocao
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
@@ -18,19 +19,40 @@ def pagina_cardapio(request: Request, unidade_id: int = None):
 
     db = SessionLocal()
     unidades = db.query(Unidade).all()
+
     if unidade_id:
         pratos = db.query(Prato).filter(Prato.unidade_id == unidade_id).all()
+        promocoes = db.query(Promocao).filter(Promocao.unidade_id == unidade_id).all()
     else:
         pratos = db.query(Prato).all()
+        promocoes = db.query(Promocao).all()
+
+    mapa_promocoes = {
+        (p.prato_id, p.unidade_id): p for p in promocoes
+    }
+
     pratos_formatados = []
+
     for p in pratos:
+        promocao = mapa_promocoes.get((p.id, p.unidade_id))
+
+        if promocao and promocao.ativo:
+            preco_final = p.preco * (1 - promocao.desconto / 100)
+            promo = True
+        else:
+            preco_final = p.preco
+            promo = False
+
         pratos_formatados.append({
             "id": p.id,
             "nome": p.nome,
-            "preco": p.preco,
-            "promocao": "Sim" if p.promocao else "Não",
+            "preco_original": p.preco,
+            "preco": round(preco_final, 2),
+            "promocao": promo,
+            "desconto": promocao.desconto if promocao else None,
             "unidade": p.unidade.nome if p.unidade else "-"
         })
+
     db.close()
 
     return templates.TemplateResponse(

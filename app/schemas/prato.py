@@ -4,6 +4,6 @@ class PratoCreate(BaseModel):
     nome: str
     descricao: Optional[str] = None
     preco: float
-    promocao: Optional[bool] = False
-    imagem: Optional[str] = None
+    ativo: bool = True
+    #promocao: Optional[bool] = False
     unidade_id: int
