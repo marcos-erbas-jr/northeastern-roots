@@ -9,3 +9,4 @@ class Unidade(Base):
     cidade = Column(String)
     ativo = Column(Boolean, default=True)
     usuarios = relationship("Usuario", back_populates="unidade")
+    pratos = relationship("Prato", back_populates="unidade")

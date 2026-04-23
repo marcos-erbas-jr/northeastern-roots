@@ -2,6 +2,7 @@ from app.core.database import SessionLocal
 from app.core.database import Base, engine
 from app.models.usuario import Usuario
 from app.models.unidade import Unidade
+from app.models.prato import Prato
 from app.core.security import gerar_hash
 
 def seed():
@@ -42,6 +43,30 @@ def seed():
         }
     ]
 
+    pratos = [
+        {
+            "nome": "Acarajé",
+            "descricao": "Bolinho frito no azeite de dendê, feito com feijão fradinho, sal, alho, gengibre, cebola e recheado com camarão",
+            "preco": 15.0,
+            "promocao": False,
+            "unidade": "campos"
+        },
+        {
+            "nome": "Vatapá",
+            "descricao": "Creme feito com farinha de rosca ou fubá, castanha de caju, pimenta, leite de coco, amendoim, pão, azeite de dendê e camarão.",
+            "preco": 23.50,
+            "promocao": False,
+            "unidade": "campos"
+        },
+        {
+            "nome": "Moqueca",
+            "descricao": "Consiste em peixe cozinho (pode ser cação) com outros frutos-do-mar como camarão, além de temperos. ",
+            "preco": 45.0,
+            "promocao": False,
+            "unidade": "rio"
+        }
+    ]
+
     for unid in unidades:
         existe = db.query(Unidade).filter(Unidade.nome == unid["nome"]).first()
         if not existe:
@@ -72,7 +97,23 @@ def seed():
         )
         db.add(novo)
 
-    db.commit()
+    for p in pratos:
+        unidade = mapa_unidades.get(p.get("unidade"))
+
+        existe = db.query(Prato).filter(
+            Prato.nome == p["nome"],
+            Prato.unidade_id == unidade.id
+        ).first()
+
+        if not existe:
+            novo = Prato(
+                nome=p["nome"],
+                descricao=p["descricao"],
+                preco=p["preco"],
+                promocao=p["promocao"],
+                unidade=unidade
+            )
+            db.add(novo)
 
 
     db.commit()

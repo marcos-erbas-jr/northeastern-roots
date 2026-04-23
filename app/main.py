@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from app.api.routes import auth, home, painel, pedidos, promocao, unidades, estoque, cardapio, usuarios, clientes, restaurante
 from app.core.database import Base, engine
-from app.models import usuario
+from app.models import usuario, prato
 
 app = FastAPI()
 Base.metadata.create_all(bind=engine)
