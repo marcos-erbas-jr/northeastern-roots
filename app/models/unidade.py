@@ -11,3 +11,5 @@ class Unidade(Base):
     usuarios = relationship("Usuario", back_populates="unidade")
     pratos = relationship("Prato", back_populates="unidade")
     promocoes = relationship("Promocao", back_populates="unidade")
+    ingredientes = relationship("Ingrediente", back_populates="unidade")
+    estoques = relationship("Estoque", back_populates="unidade")

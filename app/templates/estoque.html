@@ -10,10 +10,13 @@
   <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
     Unidades
   </button>
-  <div class="dropdown-menu dropdown-menu-lg-right">
-    <button class="dropdown-item" type="button">Unid. Campos</button>
-    <button class="dropdown-item" type="button">Another action</button>
-    <button class="dropdown-item" type="button">Something else here</button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="/estoque">Todas</a>
+    {% for un in unidades %}
+      <a class="dropdown-item" href="/estoque?unidade_id={{un.id}}">
+        {{un.nome}}
+      </a>
+    {% endfor %}
   </div>
 </div>
 
@@ -28,17 +31,19 @@
     </tr>
   </thead>
   <tbody>
+    {% for e in estoques %}
     <tr>
-      <th scope="row">1</th>
-      <td>Bacon</td>
-      <td>213</td>
-      <td>Unid.Campos</td>
-
+      <td>{{e.id}}</td>
+      <td>{{e.ingrediente}}</td>
+      <td>{{e.quantidade}}</td>
+      <td>{{e.unidade}}</td>
+      
       <td>
-        <button class="btn btn-primary">Atualizar</button>
-        <button class="btn btn-danger">Excluir</button>
+        <button class="btn btn-primary btn-sm">Editar</button>
+        <button class="btn btn-danger btn-sm">Excluir</button>
       </td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 <div class="d-flex gap-2 mt-3">

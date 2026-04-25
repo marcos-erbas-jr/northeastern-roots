@@ -12,3 +12,5 @@ class Prato(Base):
     unidade_id = Column(Integer, ForeignKey("unidades.id"), nullable=False)
     unidade = relationship("Unidade", back_populates="pratos")
     promocoes = relationship("Promocao", back_populates="prato")
+    #ingredientes = relationship("Ingrediente", back_populates="prato")
+    receitas = relationship("Receita", back_populates="prato")
