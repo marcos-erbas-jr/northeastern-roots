@@ -5,3 +5,6 @@ from .promocao import Promocao
 from .ingrediente import Ingrediente
 from .estoque import Estoque
 from .receita import Receita
+from .cliente import Cliente
+from .pedido import Pedido
+from .itemPedido import ItemPedido

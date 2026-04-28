@@ -10,10 +10,13 @@
   <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
     Unidades
   </button>
-  <div class="dropdown-menu dropdown-menu-lg-right">
-    <button class="dropdown-item" type="button">Unid. Campos</button>
-    <button class="dropdown-item" type="button">Another action</button>
-    <button class="dropdown-item" type="button">Something else here</button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="/clientes">Todas</a>
+    {% for un in unidades %}
+      <a class="dropdown-item" href="/clientes?unidade_id={{un.id}}">
+        {{un.nome}}
+      </a>
+    {% endfor %}
   </div>
 </div>
 
@@ -30,19 +33,21 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Fulano da Silva</td>
-      <td>fulanosilva@email.com</td>
-      <td>22912345678</td>
-      <td>Sim</td>
-      <td>15</td>
-      <td>
-        <button class="btn btn-primary">Atualizar</button>
-        <button class="btn btn-danger">Excluir</button>
-      </td>
-    </tr>
-  </tbody>
+  {% for c in clientes %}
+  <tr>
+    <th scope="row">{{c.id}}</th>
+    <td>{{c.nome}}</td>
+    <td>{{c.email}}</td>
+    <td>{{c.telefone}}</td>
+    <td>{{c.fidelizacao}}</td>
+    <td>{{c.pedidos}}</td>
+    <td>
+      <button class="btn btn-primary">Atualizar</button>
+      <button class="btn btn-danger">Excluir</button>
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
 </table>
 <div class="d-flex gap-2 mt-3">
     <button class="btn btn-success">Criar</button>

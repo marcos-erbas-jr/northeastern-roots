@@ -140,6 +140,41 @@ def seed():
 
     ]
 
+    clientes = [
+        {
+            "nome": "João Silva",
+            "email": "joao@email.com",
+            "telefone": "22999999999"
+        },
+        {
+            "nome": "Maria Souza",
+            "email": "maria@email.com",
+            "telefone": "22988888888"
+        }
+    ]
+
+    pedidos = [
+        {
+            "cliente": "joao@email.com",
+            "unidade": "campos",
+            "status": "pendente",
+            "canal": "app",
+            "itens": [
+                {"prato": "acaraje", "quantidade": 2},
+                {"prato": "vatapa", "quantidade": 1}
+            ]
+        },
+        {
+            "cliente": None,
+            "unidade": "rio",
+            "status": "preparando",
+            "canal": "balcao",
+            "itens": [
+                {"prato": "moqueca", "quantidade": 1}
+            ]
+        }
+    ]
+
     for unid in unidades:
         existe = db.query(Unidade).filter(Unidade.nome == unid["nome"]).first()
         if not existe:
@@ -197,9 +232,15 @@ def seed():
         Prato.nome == "Moqueca",
         Prato.unidade_id == unidade_rio.id).first()
 
+    prato_vatapa = db.query(Prato).filter(
+        Prato.nome == "Vatapá",
+        Prato.unidade_id == unidade_campos.id
+    ).first()
+
     mapa_pratos = {
         "acaraje": prato_acaraje,
-        "moqueca": prato_moqueca
+        "moqueca": prato_moqueca,
+        "vatapa": prato_vatapa
     }
 
     mapa_ingredientes = {}
@@ -272,6 +313,57 @@ def seed():
             )
             db.add(novo)
 
+
+    db.commit()
+
+    mapa_clientes = {}
+
+    for c in clientes:
+        existe = db.query(Cliente).filter(Cliente.email == c["email"]).first()
+        if not existe:
+            novo = Cliente(
+                nome=c["nome"],
+                email=c["email"],
+                telefone=c["telefone"]
+            )
+            db.add(novo)
+            db.flush()
+            mapa_clientes[c["email"]] = novo
+        else:
+            mapa_clientes[c["email"]] = existe
+
+    db.commit()
+
+    from datetime import datetime
+
+    for p in pedidos:
+        cliente = mapa_clientes.get(p.get("cliente"))
+        unidade = mapa_unidades.get(p["unidade"])
+        if not unidade:
+            print("Erro: unidade não encontrada!", p)
+            continue
+
+        novo_pedido = Pedido(
+            cliente_id=cliente.id if cliente else None,
+            unidade_id=unidade.id,
+            status=p["status"],
+            canal=p["canal"],
+            data=datetime.now()
+        )
+
+        db.add(novo_pedido)
+        db.flush()
+
+        for item in p["itens"]:
+            prato = mapa_pratos.get(item["prato"])
+            if not prato:
+                print("ERRO: item ignorado ->", item)
+                continue
+            db.add(ItemPedido(
+                pedido_id=novo_pedido.id,
+                prato_id=prato.id,
+                quantidade=item["quantidade"]
+            ))
 
     db.commit()
 

@@ -10,10 +10,15 @@
   <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
     Unidades
   </button>
-  <div class="dropdown-menu dropdown-menu-lg-right">
-    <button class="dropdown-item" type="button">Unid. Campos</button>
-    <button class="dropdown-item" type="button">Another action</button>
-    <button class="dropdown-item" type="button">Something else here</button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="/pedidos">Todas</a>
+
+    {% for un in unidades %}
+      <a class="dropdown-item" href="/pedidos?unidade_id={{un.id}}">
+        {{un.nome}}
+      </a>
+    {% endfor %}
+
   </div>
 </div>
 
@@ -25,26 +30,28 @@
       <th scope="col">Quantidade</th>
       <th scope="col">Total</th>
       <th scope="col">Canal</th>
-      <th scope="col">Atendente</th>
+      <th scope="col">Cliente</th>
       <th scope="col">Status</th>
       <th scope="col">Ações</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Pizza</td>
-      <td>2</td>
-      <td>R$50,00</td>
-      <td>Caixa</td>
-      <td>Maria</td>
-      <td>Preparando</td>
-      <td>
-        <button class="btn btn-primary">Atualizar</button>
-        <button class="btn btn-danger">Cancelar</button>
-      </td>
-    </tr>
-  </tbody>
+      {% for p in pedidos %}
+      <tr>
+        <th scope="row">{{p.id}}</th>
+        <td>{{p.pratos}}</td>
+        <td>{{p.quantidade}}</td>
+        <td>R$ {{p.total}}</td>
+        <td>{{p.canal}}</td>
+        <td>{{p.cliente}}</td>
+        <td>{{p.status}}</td>
+        <td>
+          <button class="btn btn-primary">Atualizar</button>
+          <button class="btn btn-danger">Cancelar</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
 </table>
 <div class="d-flex gap-2 mt-3">
     <button class="btn btn-success">Criar</button>
