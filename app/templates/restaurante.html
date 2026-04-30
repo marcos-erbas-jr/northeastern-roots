@@ -24,47 +24,22 @@
 
       <div class="container">
         <div class="row">
-
-          
+          {% for p in pratos %}
           <div class="col-md-4 mb-4">
             <div class="card">
-              <img src="/static/img/comida1.jpg" class="card-img-top" alt="Prato 1">
+              <img src="/static/img/comida1.jpg" class="card-img-top">
+
               <div class="card-body">
-                <h5 class="card-title">Comida1</h5>
-                <p class="card-text">Calabresa, queijo, cebola</p>
-                <button onclick="adicionarItem('Comida1', 25)" class="btn btn-primary">
+                <h5 class="card-title">{{p.nome}}</h5>
+                <p class="card-text">{{p.descricao}}</p>
+
+                <button onclick="adicionarItem({{p.id}}, '{{p.nome}}', {{p.preco}})" class="btn btn-primary">
                   Adicionar
                 </button>
               </div>
             </div>
           </div>
-
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <img src="/static/img/comida2.jpg" class="card-img-top" alt="Prato 2">
-              <div class="card-body">
-                <h5 class="card-title">Comida2</h5>
-                <p class="card-text">Frango, catupiry</p>
-                <button onclick="adicionarItem('Comida2', 30)" class="btn btn-primary">
-                  Adicionar
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <img src="/static/img/comida3.jpg" class="card-img-top" alt="Prato 3">
-              <div class="card-body">
-                <h5 class="card-title">Comida3</h5>
-                <p class="card-text">Bacon, queijo</p>
-                <button onclick="adicionarItem('Comida3', 40)" class="btn btn-primary">
-                  Adicionar
-                </button>
-              </div>
-            </div>
-          </div>
-
+          {% endfor %}
         </div>
       </div>
 
@@ -74,8 +49,7 @@
                 <span id="total">Total: R$ 0,00</span>
             </div>
 
-          <button class="btn btn-success" onclick="finalizarPedido()">
-            Finalizar pedido
+          <button class="btn btn-success" onclick="finalizarPedido({{unidade_id}})">Pagar
           </button>
         </div>
 

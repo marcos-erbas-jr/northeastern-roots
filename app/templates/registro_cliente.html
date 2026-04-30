@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Clientes{% endblock %}
+
+{% block content %}
+<h3>Novo Cliente</h3>
+<p>Cadastro de cliente.</p>
+
+<form method="post" action="/clientes/criar" class="mt-3">
+  <div class="row g-2">
+    <div class="col">
+      <input type="text" name="nome" class="form-control" placeholder="Nome" required>
+    </div>
+    <div class="col">
+      <input type="email" name="email" class="form-control" placeholder="Email" required>
+    </div>
+    <div class="col">
+      <input type="text" name="telefone" class="form-control" placeholder="Telefone">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-success">Criar</button>
+    </div>
+  </div>
+</form>
+
+{% endblock %}

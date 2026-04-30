@@ -15,3 +15,4 @@ class Pedido(Base):
     unidade_id = Column(Integer, ForeignKey("unidades.id"), nullable=False)
     unidade = relationship("Unidade")
     itens = relationship("ItemPedido", back_populates="pedido")
+    pagamento = relationship("Pagamento", back_populates="pedido", uselist=False)

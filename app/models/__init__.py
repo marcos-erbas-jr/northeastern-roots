@@ -8,3 +8,4 @@ from .receita import Receita
 from .cliente import Cliente
 from .pedido import Pedido
 from .itemPedido import ItemPedido
+from .pagamento import Pagamento
