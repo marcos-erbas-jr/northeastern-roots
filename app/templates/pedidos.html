@@ -6,6 +6,7 @@
 <h3>Pedidos</h3>
 <p>Gestão de Pedidos</p>
 
+{% if role == "admin" %}
 <div class="btn-group">
   <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
     Unidades
@@ -21,6 +22,7 @@
 
   </div>
 </div>
+{% endif %}
 
 <table class="table table-striped table-hover">
   <thead>
@@ -54,6 +56,6 @@
     </tbody>
 </table>
 <div class="d-flex gap-2 mt-3">
-    <button class="btn btn-success">Criar</button>
+    <a href="/criar_pedido" class="btn btn-success">Criar</a>
 </div>
 {% endblock %}

@@ -24,7 +24,7 @@ def seed():
         {
             "nome": "Cozinha",
             "email": "cozinha@raizesdonordeste.com",
-            "senha": "123456",
+            "senha": "12345678",
             "role": "cozinha",
             "unidade": "campos"
         }

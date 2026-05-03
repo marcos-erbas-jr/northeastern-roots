@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
-from app.core.security import verificar_login
+from app.core.security import verificar_login, verificar_permissao
 from app.core.database import SessionLocal
 from app.models.estoque import Estoque
 from app.models.unidade import Unidade
@@ -21,15 +21,28 @@ def pagina_estoque(request: Request, unidade_id: int = None):
     response = verificar_login(request)
     if response:
         return response
+    perm = verificar_permissao(request, ["admin", "cozinha"])
+    if perm:
+        return perm
+
+
     db = SessionLocal()
     unidades = db.query(Unidade).all()
 
-    if unidade_id:
-        estoques = db.query(Estoque).filter(
-            Estoque.unidade_id == unidade_id
-        ).all()
+    role = request.cookies.get("role")
+    unidade_usuario = request.cookies.get("unidade_id")
+
+    if role == "admin":
+        if unidade_id:
+            estoques = db.query(Estoque).filter(
+                Estoque.unidade_id == unidade_id
+            ).all()
+        else:
+            estoques = db.query(Estoque).all()
     else:
-        estoques = db.query(Estoque).all()
+        estoques = db.query(Estoque).filter(
+            Estoque.unidade_id == int(unidade_usuario)
+        ).all()
 
     estoques_formatados = []
 

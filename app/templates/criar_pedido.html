@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Clientes{% endblock %}
+
+{% block content %}
+<h3>Novo Pedido</h3>
+
+<div class="container">
+        <div class="row">
+          {% for p in pratos %}
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="/static/img/comida1.jpg" class="card-img-top">
+
+              <div class="card-body">
+                <h5 class="card-title">{{p.nome}}</h5>
+                <p class="card-text">{{p.descricao}}</p>
+
+                <button onclick="adicionarItem({{p.id}}, '{{p.nome}}', {{p.preco}})" class="btn btn-primary">
+                  Adicionar
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+       <div class="d-flex justify-content-center mt-4">
+          <div class="d-flex justify-content-between mb-3" style="color:rgb(214, 196, 184); margin-right: 3%;">
+                <span id="quantidade">Quantidade: 0- </span>
+                <span id="total">Total: R$ 0,00</span>
+            </div>
+
+          <button class="btn btn-success" onclick="finalizarPedidoPainel({{unidade_id}})">Pagar
+          </button>
+        </div>
+
+
+      <script src="/static/js/carrinho.js"></script>
+
+{% endblock %}

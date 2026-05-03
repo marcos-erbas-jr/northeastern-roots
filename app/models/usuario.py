@@ -11,3 +11,4 @@ class Usuario(Base):
     role = Column(String)
     unidade_id = Column(Integer, ForeignKey("unidades.id"))
     unidade = relationship("Unidade", back_populates="usuarios")
+    pedidos = relationship("Pedido", back_populates="usuario")

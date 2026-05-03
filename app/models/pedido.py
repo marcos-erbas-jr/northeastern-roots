@@ -16,3 +16,5 @@ class Pedido(Base):
     unidade = relationship("Unidade")
     itens = relationship("ItemPedido", back_populates="pedido")
     pagamento = relationship("Pagamento", back_populates="pedido", uselist=False)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
+    usuario = relationship("Usuario", back_populates="pedidos")

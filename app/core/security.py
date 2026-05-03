@@ -33,3 +33,8 @@ def get_usuario_atual(request: Request):
     return {
         "role": request.cookies.get("role")
     }
+
+def verificar_permissao(request: Request, roles_permitidos: list):
+    role = request.cookies.get("role")
+    if role not in roles_permitidos:
+        return RedirectResponse("/painel", status_code=302)

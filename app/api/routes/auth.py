@@ -38,6 +38,8 @@ def login(request: Request, email: str = Form(...), senha: str = Form(...)):
         response = RedirectResponse(url="/painel", status_code=302)
         response.set_cookie("logado", "true")
         response.set_cookie("role", usuario.role)
+        response.set_cookie("user_id", str(usuario.id))
+        response.set_cookie("unidade_id", str(usuario.unidade_id))
         return response
 
     return templates.TemplateResponse(
@@ -51,4 +53,5 @@ def logout():
     response = RedirectResponse(url="/login", status_code=302)
     response.delete_cookie("logado")
     response.delete_cookie("role")
+    response.delete_cookie("user_id")
     return response

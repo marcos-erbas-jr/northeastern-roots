@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Form
 from fastapi.templating import Jinja2Templates
-from app.core.security import verificar_login
+from app.core.security import verificar_login, verificar_permissao
 from app.core.database import SessionLocal
 from app.models.cliente import Cliente
 from fastapi.responses import RedirectResponse
@@ -20,9 +20,14 @@ def pagina_clientes(request: Request):
     if response:
         return response
 
+    perm = verificar_permissao(request, ["admin", "atendente"])
+    if perm:
+        return perm
+
     db = SessionLocal()
     clientes = db.query(Cliente).all()
     clientes_formatados = []
+
 
     for c in clientes:
         total_pedidos = len(c.pedidos)

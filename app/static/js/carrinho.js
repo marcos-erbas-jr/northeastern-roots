@@ -16,6 +16,30 @@ function atualizarCarrinho() {
     document.getElementById("total").innerText = "Total: R$ " + total.toFixed(2);
     document.getElementById("quantidade").innerText = "Quantidade: " + quantidadeTotal;
 }
+
+function finalizarPedidoPainel(unidade_id) {
+    fetch("/pedidos/criar_com_itens", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            itens: carrinho,
+            unidade_id: unidade_id
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.erro) {
+            alert("Erro: " + data.erro);
+            return;
+        }
+
+        alert("Pedido criado com sucesso!");
+        localStorage.removeItem("carrinho");
+        window.location.href = "/pedidos";});
+    }
+
 function finalizarPedido(unidade_id) {
     fetch("/pedido_publico", {
         method: "POST",
@@ -30,7 +54,8 @@ function finalizarPedido(unidade_id) {
     .then(res => res.json())
     .then(data => {
     alert("Pedido realizado com sucesso!");
-    localStorage.removeItem("carrinho");
+    document.addEventListener("DOMContentLoaded", function () {
+    atualizarCarrinho();});
     window.location.reload();});
 }
 document.addEventListener("DOMContentLoaded", function () {

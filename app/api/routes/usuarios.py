@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
-from app.core.security import verificar_login
+from app.core.security import verificar_login, verificar_permissao
 from app.core.database import SessionLocal
 from app.models.usuario import Usuario
 from app.models.unidade import Unidade
@@ -15,6 +15,9 @@ def pagina_usuarios(request: Request, unidade_id: int = None):
     response = verificar_login(request)
     if response:
         return response
+    perm = verificar_permissao(request, ["admin"])
+    if perm:
+        return perm
 
     db = SessionLocal()
     unidades = db.query(Unidade).all()
