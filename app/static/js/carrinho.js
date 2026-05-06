@@ -18,6 +18,9 @@ function atualizarCarrinho() {
 }
 
 function finalizarPedidoPainel(unidade_id) {
+    const select = document.getElementById("cliente_id");
+    const cliente_id = select ? select.value : null;
+
     fetch("/pedidos/criar_com_itens", {
         method: "POST",
         headers: {
@@ -25,7 +28,8 @@ function finalizarPedidoPainel(unidade_id) {
         },
         body: JSON.stringify({
             itens: carrinho,
-            unidade_id: unidade_id
+            unidade_id: unidade_id,
+            cliente_id: cliente_id
         })
     })
     .then(res => res.json())
@@ -37,8 +41,9 @@ function finalizarPedidoPainel(unidade_id) {
 
         alert("Pedido criado com sucesso!");
         localStorage.removeItem("carrinho");
-        window.location.href = "/pedidos";});
-    }
+        window.location.href = "/pedidos";
+    });
+}
 
 function finalizarPedido(unidade_id) {
     fetch("/pedido_publico", {
@@ -54,8 +59,6 @@ function finalizarPedido(unidade_id) {
     .then(res => res.json())
     .then(data => {
     alert("Pedido realizado com sucesso!");
-    document.addEventListener("DOMContentLoaded", function () {
-    atualizarCarrinho();});
     window.location.reload();});
 }
 document.addEventListener("DOMContentLoaded", function () {

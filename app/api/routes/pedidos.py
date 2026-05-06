@@ -8,6 +8,7 @@ from app.core.mock import processar_pagamento_mock
 from app.models.itemPedido import ItemPedido
 from app.models.prato import Prato
 from app.models.pagamento import Pagamento
+from app.models.cliente import Cliente
 from datetime import datetime
 from fastapi.responses import RedirectResponse
 
@@ -130,6 +131,7 @@ def tela_criar_pedido(request: Request):
     unidades = None
     pratos = db.query(Prato).filter(
         Prato.unidade_id == unidade_id).all()
+    clientes = db.query(Cliente).all()
 
     db.close()
 
@@ -140,16 +142,13 @@ def tela_criar_pedido(request: Request):
             "pratos": pratos,
             "unidades": unidades,
             "unidade_id": unidade_id,
-            "role": role
+            "role": role,
+            "clientes": clientes
         }
     )
 
 @router.post("/pedidos/criar")
-def criar_pedido(
-    request: Request,
-    unidade_id: int = Form(...),
-    canal: str = Form(...)
-):
+def criar_pedido(request: Request,unidade_id: int = Form(...),canal: str = Form(...)):
     response = verificar_login(request)
     if response:
         return response
@@ -210,6 +209,11 @@ async def criar_pedido_com_itens(request: Request):
     itens = data.get("itens", [])
     usuario_id = request.cookies.get("user_id")
     usuario_id = int(usuario_id) if usuario_id else None
+    cliente_id = data.get("cliente_id")
+    if cliente_id:
+        cliente_id = int(cliente_id)
+    else:
+        cliente_id = None
 
     if not unidade_id or not itens:
         db.close()
@@ -219,8 +223,10 @@ async def criar_pedido_com_itens(request: Request):
         canal="balcao",
         status="pendente",
         data=datetime.now(),
-        usuario_id=usuario_id
+        usuario_id=usuario_id,
+        cliente_id=cliente_id
     )
+    #print("CLIENTE_ID:", cliente_id)
 
     db.add(novo_pedido)
     db.flush()
@@ -239,7 +245,7 @@ async def criar_pedido_com_itens(request: Request):
         db.add(ItemPedido(
             pedido_id=novo_pedido.id,
             prato_id=prato.id,
-            quantidade=quantidade
+            quantidade=quantidade,
         ))
 
         total += prato.preco * quantidade

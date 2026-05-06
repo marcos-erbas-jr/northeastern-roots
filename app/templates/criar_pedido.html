@@ -7,6 +7,12 @@
 
 <div class="container">
         <div class="row">
+          <select id="cliente_id" name="cliente_id" class="form-control">
+            <option value="">Sem cliente</option>
+            {% for c in clientes %}
+              <option value="{{c.id}}">{{c.nome}}</option>
+            {% endfor %}
+          </select>
           {% for p in pratos %}
           <div class="col-md-4 mb-4">
             <div class="card">
