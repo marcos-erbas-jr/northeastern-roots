@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Form
 from fastapi.templating import Jinja2Templates
 from app.core.security import verificar_login, verificar_permissao
 from app.core.database import SessionLocal
 from app.models.prato import Prato
 from app.models.unidade import Unidade
 from app.models.promocao import Promocao
+from fastapi.responses import RedirectResponse
+from sqlalchemy.exc import IntegrityError
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
@@ -82,3 +84,31 @@ def pagina_cardapio(request: Request, unidade_id: int = None):
             "role": request.cookies.get("role")
         }
     )
+
+@router.get("/cardapio/editar/{id}")
+def editar_cardapio(request: Request, id: int):
+    response = verificar_login(request)
+    if response:
+        return response
+    perm = verificar_permissao(request, ["admin"])
+    if perm:
+        return perm
+    db = SessionLocal()
+
+    prato = db.query(Prato).filter(Prato.id == id).first()
+    unidades = db.query(Unidade).all()
+    db.close()
+    return templates.TemplateResponse(
+        name="editar_cardapio.html",
+        request=request,
+        context={
+            "role": request.cookies.get("role"),
+            "prato": prato,
+            "erro": None,
+            "unidades": unidades
+        }
+    )
+
+### FALTA ROTA DE POST PARA ATUALIZAR UNIDADE
+
+### POST DE DESATIVAR

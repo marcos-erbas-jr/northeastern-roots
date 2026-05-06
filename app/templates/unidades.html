@@ -5,35 +5,55 @@
 {% block content %}
 <h3>Unidades</h3>
 <p>Gestão de unidades.</p>
+
 <table class="table table-striped table-hover">
   <thead>
     <tr>
       <th scope="col">Registro</th>
       <th scope="col">Unidade</th>
-      <th scope="col">Vendas</th>
-      <th scope="col">Faturamento</th>
-      <th scope="col">Funcionários</th>
+      <th scope="col">Cidade</th>
+      <th scope="col">Status</th>
       <th scope="col">Ações</th>
     </tr>
   </thead>
+
   <tbody>
     {% for u in unidades %}
     <tr>
       <th scope="row">{{u.id}}</th>
       <td>{{u.nome}}</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-
+      <td>{{u.cidade}}</td>
       <td>
-        <button class="btn btn-primary">Detalhes</button>
-        <button class="btn btn-danger">Excluir</button>
+        {% if u.ativo %}
+          <span class="badge bg-success">Ativa</span>
+        {% else %}
+          <span class="badge bg-secondary">Inativa</span>
+        {% endif %}
+      </td>
+
+      <td class="d-flex gap-2">
+        <a href="/unidades/editar/{{u.id}}" class="btn btn-primary btn-sm">
+          Editar
+        </a>
+        {% if u.ativo %}
+        <form action="/unidades/deletar/{{u.id}}" method="post" style="display:inline;">
+          <button type="submit" class="btn btn-danger btn-sm"
+                  onclick="return confirm('Deesativar esta unidade?')">
+            Desativar
+          </button>
+        </form>
+        {% endif %}
+
       </td>
     </tr>
-    {%endfor%}
-</tbody>
+    {% endfor %}
+  </tbody>
 </table>
+
 <div class="d-flex gap-2 mt-3">
-    <a href="/unidades/registrar" class="btn btn-success">Registrar</a>
+  <a href="/unidades/nova" class="btn btn-success">
+    Nova Unidade
+  </a>
 </div>
+
 {% endblock %}

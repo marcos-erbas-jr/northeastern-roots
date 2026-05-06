@@ -31,6 +31,7 @@
       <th scope="col">Prato</th>
       <th scope="col">Preço</th>
       <th scope="col">Vendidos</th>
+      <th scope="col">Unidade</th>
       <th scope="col">Promoção</th>
       <th scope="col">Ações</th>
     </tr>
@@ -42,11 +43,14 @@
       <td>{{p.nome}}</td>
       <td>{{p.preco}}</td>
       <td>-</td>
+      <td>{{p.unidade}}</td>
       <td>{{p.promocao}}</td>
 
       <td>
-        <button class="btn btn-primary">Detalhes</button>
-        <button class="btn btn-danger">Excluir</button>
+        <a href="/cardapio/editar/{{p.id}}" class="btn btn-primary btn-sm">
+          Editar
+        </a>
+        <button class="btn btn-danger">Desativar</button>
       </td>
     </tr>
     {%endfor%}

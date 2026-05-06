@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar Prato
+{% endblock %}
+
+{% block content %}
+
+<h3>Editar Prato</h3>
+
+{% if erro %}
+<div class="alert alert-danger">
+  {{ erro }}
+</div>
+{% endif %}
+
+<form method="post" action="/cardapio/atualizar/{{prato.id}}">
+
+  <div class="mb-3">
+    <label class="form-label" style="color: rgb(233, 212, 198);">Nome</label>
+    <input type="text"
+           name="nome"
+           class="form-control"
+           required
+           value="{{prato.nome}}">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" style="color: rgb(233, 212, 198);">Descrição</label>
+    <input type="text"
+           name="descricao"
+           class="form-control"
+           required
+           value="{{prato.descricao}}">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" style="color: rgb(233, 212, 198);">Preço</label>
+    <input type="number"
+           name="preco"
+           class="form-control"
+           required
+           min="0"
+           step="0.01"
+           value="{{prato.preco}}">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" style="color: rgb(233, 212, 198);">Unidade</label>
+
+    <select name="unidade_id" class="form-control">
+
+      {% for un in unidades %}
+        <option value="{{un.id}}"
+          {% if prato.unidade_id == un.id %}selected{% endif %}>
+          {{un.nome}}
+        </option>
+      {% endfor %}
+
+    </select>
+  </div>
+
+  <div class="mb-3 form-check">
+    <input 
+        type="checkbox" 
+        class="form-check-input" 
+        name="ativo" 
+        id="ativo"
+        {% if prato.ativo %}checked{% endif %}>
+    <label class="form-check-label" for="ativo" style="color: rgb(233, 212, 198);">
+        Ativo
+    </label>
+  </div>
+
+  <!-- BOTÕES -->
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-success">
+      Atualizar
+    </button>
+
+    <a href="/cardapio" class="btn btn-secondary">
+      Cancelar
+    </a>
+  </div>
+
+</form>
+
+{% endblock %}
