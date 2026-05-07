@@ -70,7 +70,8 @@ def pagina_cardapio(request: Request, unidade_id: int = None):
             "preco": round(preco_final, 2),
             "promocao": promo,
             "desconto": promocao.desconto if promocao else None,
-            "unidade": p.unidade.nome if p.unidade else "-"
+            "unidade": p.unidade.nome if p.unidade else "-",
+            "ativo": p.ativo
         })
 
     db.close()
@@ -109,6 +110,129 @@ def editar_cardapio(request: Request, id: int):
         }
     )
 
-### FALTA ROTA DE POST PARA ATUALIZAR UNIDADE
+@router.post("/cardapio/atualizar/{id}")
+def atualizar_prato(
+    request: Request,
+    id: int,
+    nome: str = Form(...),
+    descricao: str = Form(...),
+    preco: float = Form(...),
+    unidade_id: int = Form(...),
+    ativo: str = Form(None)):
+    response = verificar_login(request)
+    if response:
+        return response
 
-### POST DE DESATIVAR
+    perm = verificar_permissao(request, ["admin"])
+    if perm:
+        return perm
+    db = SessionLocal()
+    prato = db.query(Prato).filter(
+        Prato.id == id
+    ).first()
+    prato.nome = nome
+    prato.descricao = descricao
+    prato.preco = preco
+    prato.unidade_id = unidade_id
+    prato.ativo = True if ativo == "on" else False
+
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        unidades = db.query(Unidade).all()
+        return templates.TemplateResponse(
+            name="editar_cardapio.html",
+            request=request,
+            context={
+                "role": request.cookies.get("role"),
+                "prato": prato,
+                "unidades": unidades,
+                "erro": "Houve algum erro."
+            }
+        )
+    db.close()
+    return RedirectResponse(
+        "/cardapio",
+        status_code=303
+    )
+
+@router.get("/cardapio/criar")
+def novo_prato(request: Request):
+    response = verificar_login(request)
+    if response:
+        return response
+
+    perm = verificar_permissao(request, ["admin"])
+    if perm:
+        return perm
+    db = SessionLocal()
+    unidades = db.query(Unidade).all()
+
+    return templates.TemplateResponse(
+        name="cardapio_form.html",
+        request=request,
+        context={
+            "role": request.cookies.get("role"),
+            "unidades": unidades,
+            "erro": None
+        }
+    )
+
+@router.post("/cardapio/criar")
+def criar_prato(
+    request: Request,
+    nome: str = Form(...),
+    descricao: str = Form(...),
+    preco: float = Form(...),
+    unidade_id: int = Form(...)):
+    response = verificar_login(request)
+    if response:
+        return response
+    perm = verificar_permissao(request, ["admin"])
+    if perm:
+        return perm
+    db = SessionLocal()
+    novo = Prato(
+        nome=nome,
+        descricao=descricao,
+        ativo=True,
+        preco=preco,
+        unidade_id=unidade_id
+    )
+    db.add(novo)
+
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        unidades = db.query(Unidade).all()
+        db.close()
+        return templates.TemplateResponse(
+            name="cardapio_form.html",
+            request=request,
+            context={
+                "role": request.cookies.get("role"),
+                "unidades": unidades,
+                "erro": "Erro ao cadastrar prato."
+            }
+        )
+    db.close()
+    return RedirectResponse( "/cardapio",status_code=303 )
+
+
+@router.post("/cardapio/deletar/{id}")
+def deletar_prato(request: Request, id: int):
+    response = verificar_login(request)
+    if response:
+        return response
+    perm = verificar_permissao(request, ["admin"])
+    if perm:
+        return perm
+    db = SessionLocal()
+    prato = db.query(Prato).filter(Prato.id == id).first()
+    prato.ativo = False
+    db.commit()
+    db.close()
+
+    return RedirectResponse("/cardapio", status_code=303)

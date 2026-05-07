@@ -33,6 +33,7 @@
       <th scope="col">Vendidos</th>
       <th scope="col">Unidade</th>
       <th scope="col">Promoção</th>
+      <th scope="col">Ativo</th>
       <th scope="col">Ações</th>
     </tr>
   </thead>
@@ -45,19 +46,29 @@
       <td>-</td>
       <td>{{p.unidade}}</td>
       <td>{{p.promocao}}</td>
+      <td>{{p.ativo}}</td>
 
       <td>
         <a href="/cardapio/editar/{{p.id}}" class="btn btn-primary btn-sm">
           Editar
         </a>
-        <button class="btn btn-danger">Desativar</button>
+        {% if p.ativo %}
+        <form action="/cardapio/deletar/{{p.id}}" method="post" style="display:inline;">
+          <button type="submit" class="btn btn-danger btn-sm"
+                  onclick="return confirm('Deesativar este prato?')">
+            Desativar
+          </button>
+        </form>
+        {% endif %}
       </td>
     </tr>
     {%endfor%}
 </tbody>
 </table>
 <div class="d-flex gap-2 mt-3">
-    <button class="btn btn-success">Criar</button>
+  <a href="/cardapio/criar" class="btn btn-success">
+    Novo Prato
+  </a>
 </div>
 
 {% endblock %}
