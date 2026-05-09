@@ -41,15 +41,24 @@
       <td>{{e.unidade}}</td>
       
       <td>
-        <button class="btn btn-primary btn-sm">Editar</button>
-        <button class="btn btn-danger btn-sm">Excluir</button>
+        <a href="/estoque/editar/{{e.id}}"
+          class="btn btn-primary btn-sm">
+            Editar
+        </a>
+        <a href="/estoque/excluir/{{e.id}}"
+          class="btn btn-danger btn-sm">
+            Excluirr
+        </a>
       </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 <div class="d-flex gap-2 mt-3">
-    <button class="btn btn-success">Registrar</button>
+    <a href="/estoque/novo" class="btn btn-success">
+        Novo Item
+    </a>
 </div>
+
 
 {% endblock %}

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}
+Novo Item de Estoque
+{% endblock %}
+{% block content %}
+
+<h3>
+Novo Item de Estoque
+</h3>
+
+{% if erro %}
+<div class="alert alert-danger">
+    {{ erro }}
+</div>
+{% endif %}
+
+<form method="post" action="/estoque/criar">
+
+    <div class="mb-3">
+        <label class="form-label" style="color: rgb(233, 212, 198);">
+            Unidade
+        </label>
+        <select name="unidade_id" class="form-control" required>
+
+            {% for un in unidades %}
+            <option value="{{un.id}}">
+                {{un.nome}}
+            </option>
+            {% endfor %}
+
+        </select>
+    </div>
+    <hr>
+
+    <h5 style="color: rgb(233, 212, 198);">
+        Receita / Prato
+    </h5>
+
+    <div class="mb-3">
+        <label class="form-label" style="color: rgb(233, 212, 198);">
+            Prato existente
+        </label>
+
+        <select name="prato_id" class="form-control">
+            <option value="">
+                Selecionar prato
+            </option>
+            {% for p in pratos %}
+            <option value="{{p.id}}">
+                {{p.nome}}
+            </option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" style="color: rgb(233, 212, 198);">
+            Novo prato
+        </label>
+        <input
+            type="text"
+            name="novo_prato"
+            class="form-control"
+            placeholder="Digite um novo prato">
+    </div>
+    <hr>
+    <h5 style="color: rgb(233, 212, 198);">
+        Ingrediente
+    </h5>
+
+    <div class="mb-3">
+        <label class="form-label" style="color: rgb(233, 212, 198);">
+            Ingrediente existente
+        </label>
+        <select name="ingrediente_id" class="form-control">
+
+            <option value="">
+                Selecionar ingrediente
+            </option>
+
+            {% for ing in ingredientes %}
+            <option value="{{ing.id}}">
+                {{ing.nome}}
+            </option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" style="color: rgb(233, 212, 198);">
+            Novo ingrediente
+        </label>
+        <input
+            type="text"
+            name="novo_ingrediente"
+            class="form-control"
+            placeholder="Digite um novo ingrediente">
+    </div>
+    <hr>
+    <div class="mb-3">
+        <label class="form-label" style="color: rgb(233, 212, 198);">
+            Quantidade
+        </label>
+        <input
+            type="number"
+            name="quantidade"
+            class="form-control"
+            required
+            min="0"
+            step="0.01">
+    </div>
+    <div class="d-flex gap-2">
+
+        <button type="submit" class="btn btn-success">
+            Salvar
+        </button>
+
+        <a href="/estoque" class="btn btn-secondary">
+            Cancelar
+        </a>
+
+    </div>
+
+</form>
+
+{% endblock %}
