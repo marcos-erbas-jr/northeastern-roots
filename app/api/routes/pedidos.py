@@ -327,3 +327,77 @@ async def pedido_publico(request: Request):
         "status": "ok",
         "pagamento": resultado
     }
+
+
+@router.get("/pedidos/editar/{id}")
+def editar_pedido(request: Request, id: int):
+    response = verificar_login(request)
+    if response:
+        return response
+    perm = verificar_permissao(request,["admin", "atendente", "cozinha"])
+    if perm:
+        return perm
+    db = SessionLocal()
+    pedido = db.query(Pedido).filter(
+        Pedido.id == id).first()
+    clientes = db.query(Cliente).all()
+    db.close()
+    return templates.TemplateResponse(
+        name="editar_pedido.html",
+        request=request,
+        context={
+            "pedido": pedido,
+            "clientes": clientes,
+            "role": request.cookies.get("role"),
+            "erro": None
+        }
+    )
+
+@router.post("/pedidos/atualizar/{id}")
+def atualizar_pedido(
+    request: Request,
+    id: int,
+    status: str = Form(...),
+    cliente_id: int = Form(None)):
+    response = verificar_login(request)
+    if response:
+        return response
+
+    perm = verificar_permissao(request,["admin", "atendente"])
+    if perm:
+        return perm
+    db = SessionLocal()
+
+    pedido = db.query(Pedido).filter(Pedido.id == id).first()
+    pedido.status = status
+    pedido.cliente_id = cliente_id if cliente_id else None
+    db.commit()
+    db.close()
+    return RedirectResponse(
+        "/pedidos",
+        status_code=303
+    )
+
+@router.get("/pedidos/excluir/{id}")
+def cancelar_pedido(request: Request, id: int):
+    response = verificar_login(request)
+    if response:
+        return response
+
+    perm = verificar_permissao(
+        request,
+        ["admin", "atendente"]
+    )
+    if perm:
+        return perm
+    db = SessionLocal()
+
+    pedido = db.query(Pedido).filter(Pedido.id == id).first()
+    if pedido:
+        pedido.status = "cancelado"
+        db.commit()
+    db.close()
+    return RedirectResponse(
+        "/pedidos",
+        status_code=303
+    )

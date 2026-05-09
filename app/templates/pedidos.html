@@ -48,8 +48,15 @@
         <td>{{p.cliente}}</td>
         <td>{{p.status}}</td>
         <td>
-          <button class="btn btn-primary">Atualizar</button>
-          <button class="btn btn-danger">Cancelar</button>
+          <a href="/pedidos/editar/{{p.id}}" 
+            class="btn btn-primary btn-sm">
+            Atualizar
+          </a>
+          <a href="/pedidos/excluir/{{p.id}}" 
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Deseja cancelar este pedido?')">
+            Cancelar
+          </a>
         </td>
       </tr>
       {% endfor %}

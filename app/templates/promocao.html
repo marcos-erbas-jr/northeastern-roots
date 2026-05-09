@@ -41,15 +41,24 @@
       <td>{{p.preco_promo}}</td>
 
       <td>
-        <button class="btn btn-primary">Detalhes</button>
-        <button class="btn btn-danger">Excluir</button>
+          <a href="/promocao/editar/{{p.id}}"
+            class="btn btn-primary btn-sm">
+              Editar
+          </a>
+          <a href="/promocao/excluir/{{p.id}}"
+            class="btn btn-danger btn-sm">
+              Excluir
+          </a>
       </td>
     </tr>
     {%endfor%}
 </tbody>
 </table>
 <div class="d-flex gap-2 mt-3">
-    <button class="btn btn-success">Criar</button>
+    <a href="/promocao/nova"
+      class="btn btn-success">
+        Nova Promoção
+    </a>
 </div>
 
 {% endblock %}
