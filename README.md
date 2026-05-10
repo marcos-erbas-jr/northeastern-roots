@@ -15,3 +15,5 @@ Usuários para teste já salvo no banco de dados:
 •	email: admin@raizesdonordeste.com  |  senha: 12345678
 •	email: atendente@raizesdonordeste.com | senha: 12345678
 •	email: cozinha@raizesdonordeste.com | senha: 12345678
+
+Ao rodar o server uvicorn será possível ter acesso aos endpoints por meio do: http://127.0.0.1:8000/docs#
