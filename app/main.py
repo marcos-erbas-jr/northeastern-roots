@@ -21,4 +21,5 @@ app.include_router(unidades.router)
 app.include_router(usuarios.router)
 app.include_router(clientes.router)
 app.include_router(restaurante.router)
+print('TESTE')
 
