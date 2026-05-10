@@ -11,3 +11,7 @@ O objetivo deste item é mostrar as funcionalidades do sistema, demonstrando sua
    
 Obs.: Existe uma seed no projeto para gerar o banco de dados com informações iniciais, mas o projeto já foi para o GitHub com o database.db criado não sendo necessário rodar a seed.py novamente.
 
+Usuários para teste já salvo no banco de dados:
+•	email: admin@raizesdonordeste.com  |  senha: 12345678
+•	email: atendente@raizesdonordeste.com | senha: 12345678
+•	email: cozinha@raizesdonordeste.com | senha: 12345678
